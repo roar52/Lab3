@@ -26,7 +26,8 @@ class Checker:
                 if do=='r':
                     if Checker.__file_exist(alph_path):
                         break
-                break
+                else:
+                    break
             else:
                 print(f'Неправильное расширение файла с {type}! Попробуйте снова')
 
