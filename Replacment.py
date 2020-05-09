@@ -1,14 +1,12 @@
-import random
+import random,json
 import Checker
 
 from AbstractCrypt import Abstract
 class Replacement(Abstract):
     def key_generator(self):
-        alph_path=Checker.Checker.file_chek('alph','алфавитом')
+        alph_path=Checker.Checker.file_chek('alph','алфавитом','r')
         with open(alph_path,'r') as file:
-            alph=[]
-            for line in file:
-                alph=line.split(',')
+            alph=json.load(file)
         keys=[]
         for i in range(len(alph)):
             keys.append(alph[i])
@@ -29,14 +27,14 @@ class Replacement(Abstract):
             else:
                 print('Неправильная команда! Попробуйте снова...')
 
-        key_path = Checker.Checker.file_chek('key', 'ключом')
+        key_path = Checker.Checker.file_chek('key', 'ключом','w')
 
-        crypt_name='replacement'
-        for i in key_dic:
-            crypt_name=crypt_name+','+i+':'+key_dic[i]
+        crypt_name=['replacement']
+        crypt_name.append(key_dic)
+
 
         with open(key_path,'w') as file:
-            file.write(crypt_name)
+            json.dump(crypt_name,file,ensure_ascii=False)
             print('Ключ сохранен в файле:', key_path)
 
 
@@ -82,19 +80,15 @@ class Replacement(Abstract):
 
 
     def __get_key(self):
-        dirty_key = []
-        key_path = Checker.Checker.file_chek('key', 'ключом')
-        with open(key_path, 'r') as file:
-            for line in file:
-                dirty_key=line.split(',')
+        while True:
+            key_path = Checker.Checker.file_chek('key', 'ключом','r')
+            with open(key_path, 'r') as file:
+                dirty_key=json.load(file)
                 if dirty_key[0].lower() == 'replacement':
-                    break
+                    key = dirty_key[1]
+                    return key
                 else:
                     print('Неправильный ключ! Попробуйте снова')
-        key = {}
-        for i in range(1,len(dirty_key)):
-            list=dirty_key[i].split(':')
-            key[list[0]]=list[1]
 
 
-        return key
+

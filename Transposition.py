@@ -1,4 +1,4 @@
-import random,Checker
+import random,Checker,json
 from AbstractCrypt import Abstract
 class Transposition(Abstract):
     def key_generator(self):
@@ -7,23 +7,20 @@ class Transposition(Abstract):
         for i in range(1 ,user_len+1):
             key.append(i)
         random.shuffle(key)
-        key_s=''
-        for i in range(len(key)):
-            key_s += str(key[i])+','
         while True:
             user_choice=input('Напечатать ключ?(Да/Нет): ')
             if user_choice.lower()=='да':
-                print(''.join(key))
+                print(key)
                 break
             elif user_choice.lower()=='нет':
                 break
             else:
                 print('Неправильная команда! Попробуйте снова')
 
-        key_path=Checker.Checker.file_chek('key','ключом')
+        key = ['transposition'] + key
+        key_path=Checker.Checker.file_chek('key','ключом','w')
         with open(key_path,'w') as file:
-            key_s='transposition,'+key_s
-            file.write(key_s)
+            json.dump(key,file,ensure_ascii=False)
             print('Ключ сохранен в файле:',key_path)
 
     def encrypt(self,text_path):
@@ -77,17 +74,17 @@ class Transposition(Abstract):
                 print('Непраильный текст для расшифрования')
 
     def __get_key(self):
-        dirty_key = []
-        key_path=Checker.Checker.file_chek('key','ключом')
-        with open(key_path, 'r') as file:
-            for line in file:
-                dirty_key = line.split(',')
+        while True:
+            key_path=Checker.Checker.file_chek('key','ключом','r')
+            with open(key_path, 'r') as file:
+                dirty_key = json.load(file)
                 if dirty_key[0].lower() == 'transposition':
-                    break
+                    key = []
+                    for i in range(1, len(dirty_key)):
+                        key.append(int(dirty_key[i]))
+                    return key
                 else:
                     print('Неправильный ключ! Попробуйте снова')
-        key = []
-        for i in range(1, len(dirty_key)-1):
-            key.append(int(dirty_key[i]))
 
-        return key
+
+

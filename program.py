@@ -32,15 +32,15 @@ while True:
             while True:
                 user_choice = input('-> Ваш выбор: ')
                 if user_choice=='1':
-                    text_path=Checker.Checker.file_chek('txt','текстом')
+                    text_path=Checker.Checker.file_chek('txt','текстом','r')
                     replace.encrypt(text_path)
                     break
                 elif user_choice=='2':
-                    text_path=Checker.Checker.file_chek('txt','текстом')
+                    text_path=Checker.Checker.file_chek('txt','текстом','r')
                     transpos.encrypt(text_path)
                     break
                 elif user_choice=='3':
-                    text_path=Checker.Checker.file_chek('txt','текстом')
+                    text_path=Checker.Checker.file_chek('txt','текстом','r')
                     gamming.encrypt(text_path)
                     break
                 else:
@@ -50,15 +50,15 @@ while True:
             while True:
                 user_choice = input('-> Ваш выбор: ')
                 if user_choice=='1':
-                    text_path=Checker.Checker.file_chek('encrypt','шифртекстом')
+                    text_path=Checker.Checker.file_chek('encrypt','шифртекстом','r')
                     replace.decrypt(text_path)
                     break
                 elif user_choice=='2':
-                    text_path=Checker.Checker.file_chek('encrypt','шифртекстом')
+                    text_path=Checker.Checker.file_chek('encrypt','шифртекстом','r')
                     transpos.decrypt(text_path)
                     break
                 elif user_choice=='3':
-                    text_path=Checker.Checker.file_chek('encrypt','шифртекстом')
+                    text_path=Checker.Checker.file_chek('encrypt','шифртекстом','r')
                     gamming.decrypt(text_path)
                     break
                 else:
@@ -74,7 +74,7 @@ while True:
                 replace.key_generator()
                 break
             elif user_choice=='2':
-                transpos.key_generator(Transposition)
+                transpos.key_generator()
                 break
             elif user_choice=='3':
                 gamming.key_generator()

@@ -1,16 +1,16 @@
-import Checker,random
+import Checker,json
 from AbstractCrypt import Abstract
 
 class Gamming(Abstract):
     def __init__(self):
         self.__alph={}
         self.__module=0
+
     def key_generator(self):
-        alph_path=Checker.Checker.file_chek('alph','алфавитом')
+        alph_path=Checker.Checker.file_chek('alph','алфавитом','r')
 
         file=open(alph_path)
-        line=file.read()
-        alph = line.split(',')
+        alph = json.load(file)
         self.__module=len(alph)
         index=int(input('Введите индекс первой буквы в алфавите: '))
 
@@ -43,14 +43,14 @@ class Gamming(Abstract):
                 break
             else:
                 print('Неправильная команда! Попробуйте снова...')
-        key_path = Checker.Checker.file_chek('key', 'ключом')
+        key_path = Checker.Checker.file_chek('key', 'ключом','w')
 
-        crypt_name = 'gamming'
-        for i in range(len(key)):
-            crypt_name = crypt_name + ',' + str(key[i])
+        crypt_name = ['gamming']
+        crypt_name.append(self.__alph)
+        crypt_name+=key
 
         with open(key_path, 'w') as file:
-            file.write(crypt_name)
+            json.dump(crypt_name,file,ensure_ascii=False)
             print('Ключ сохранен в файле:', key_path)
 
 
@@ -128,16 +128,16 @@ class Gamming(Abstract):
                 print('Непраильный текст для расшифрования')
 
     def __get_key(self):
-        key_path = Checker.Checker.file_chek('key', 'ключом')
-        file=open(key_path)
-        line=file.read()
-        dirty_key = line.split(',')
-        if dirty_key[0].lower() == 'gamming':
-            key = []
-            for i in range(1, len(dirty_key)):
-                key.append(int(dirty_key[i]))
-        else:
-            print('Неправильный ключ! Попробуйте снова')
-
-        return key
-
+        while True:
+            key_path = Checker.Checker.file_chek('key', 'ключом', 'r')
+            with open(key_path, 'r') as file:
+                dirty_key = json.load(file)
+                if dirty_key[0].lower() == 'gamming':
+                    self.__alph=dirty_key[1]
+                    self.__module=len(self.__alph)
+                    key = []
+                    for i in range(2, len(dirty_key)):
+                        key.append(int(dirty_key[i]))
+                    return key
+                else:
+                    print('Неправильный ключ! Попробуйте снова')

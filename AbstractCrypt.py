@@ -3,11 +3,11 @@ from abc import ABC,abstractmethod
 class Abstract(ABC):
 
     @abstractmethod
-    def encrypt(self):
+    def encrypt(self,text_path):
         pass
 
     @abstractmethod
-    def decrypt(self):
+    def decrypt(self,text_path):
         pass
 
     @abstractmethod
