@@ -4,9 +4,12 @@ import Checker
 from AbstractCrypt import Abstract
 class Replacement(Abstract):
     def key_generator(self):
-        alph_path=Checker.Checker.file_chek('alph','алфавитом','r')
-        with open(alph_path,'r') as file:
-            alph=json.load(file)
+        while True:
+            alph_path=Checker.Checker.file_chek('alph','алфавитом','r')
+            if Checker.Checker.get_info_from_json(alph_path):
+                break
+        with open(alph_path, 'r') as file:
+            alph = json.load(file)
         keys=[]
         for i in range(len(alph)):
             keys.append(alph[i])
@@ -82,13 +85,15 @@ class Replacement(Abstract):
     def __get_key(self):
         while True:
             key_path = Checker.Checker.file_chek('key', 'ключом','r')
-            with open(key_path, 'r') as file:
-                dirty_key=json.load(file)
-                if dirty_key[0].lower() == 'replacement':
-                    key = dirty_key[1]
-                    return key
-                else:
-                    print('Неправильный ключ! Попробуйте снова')
+            if Checker.Checker.get_info_from_json(key_path):
+                with open(key_path, 'r') as file:
+                    dirty_key=json.load(file)
+                    if dirty_key[0].lower() == 'replacement':
+                        key = dirty_key[1]
+                        return key
+                    else:
+                        print('Неправильный ключ! Попробуйте снова')
+
 
 
 

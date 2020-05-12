@@ -76,15 +76,16 @@ class Transposition(Abstract):
     def __get_key(self):
         while True:
             key_path=Checker.Checker.file_chek('key','ключом','r')
-            with open(key_path, 'r') as file:
-                dirty_key = json.load(file)
-                if dirty_key[0].lower() == 'transposition':
-                    key = []
-                    for i in range(1, len(dirty_key)):
-                        key.append(int(dirty_key[i]))
-                    return key
-                else:
-                    print('Неправильный ключ! Попробуйте снова')
+            if Checker.Checker.get_info_from_json(key_path):
+                with open(key_path, 'r') as file:
+                    dirty_key = json.load(file)
+                    if dirty_key[0].lower() == 'transposition':
+                        key = []
+                        for i in range(1, len(dirty_key)):
+                            key.append(int(dirty_key[i]))
+                        return key
+                    else:
+                        print('Неправильный ключ! Попробуйте снова')
 
 
 

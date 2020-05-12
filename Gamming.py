@@ -7,8 +7,10 @@ class Gamming(Abstract):
         self.__module=0
 
     def key_generator(self):
-        alph_path=Checker.Checker.file_chek('alph','алфавитом','r')
-
+        while True:
+            alph_path = Checker.Checker.file_chek('alph', 'алфавитом', 'r')
+            if Checker.Checker.get_info_from_json(alph_path):
+                break
         file=open(alph_path)
         alph = json.load(file)
         self.__module=len(alph)
@@ -130,8 +132,9 @@ class Gamming(Abstract):
     def __get_key(self):
         while True:
             key_path = Checker.Checker.file_chek('key', 'ключом', 'r')
-            with open(key_path, 'r') as file:
-                dirty_key = json.load(file)
+            if Checker.Checker.get_info_from_json(key_path):
+                with open(key_path, 'r') as file:
+                    dirty_key = json.load(file)
                 if dirty_key[0].lower() == 'gamming':
                     self.__alph=dirty_key[1]
                     self.__module=len(self.__alph)
