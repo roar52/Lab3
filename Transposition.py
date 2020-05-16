@@ -2,7 +2,7 @@ import random,Checker,json
 from AbstractCrypt import Abstract
 class Transposition(Abstract):
     def key_generator(self):
-        user_len=int(input('Укажите размер блока перестановки: '))
+        user_len=Checker.Checker.value_check()
         key=[]
         for i in range(1 ,user_len+1):
             key.append(i)

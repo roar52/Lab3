@@ -7,9 +7,12 @@ class Replacement(Abstract):
         while True:
             alph_path=Checker.Checker.file_chek('alph','алфавитом','r')
             if Checker.Checker.get_info_from_json(alph_path):
-                break
-        with open(alph_path, 'r') as file:
-            alph = json.load(file)
+                with open(alph_path, 'r') as file:
+                    alph = json.load(file)
+                if not Checker.Checker.alph_check(alph):
+                    print('Дублирование в алфавите! Исправьте ошибку')
+                else:
+                    break
         keys=[]
         for i in range(len(alph)):
             keys.append(alph[i])
@@ -47,10 +50,15 @@ class Replacement(Abstract):
         with open(text_path,'r') as file:
             line=file.read()
             for i in range(len(line)):
+                flag=False
                 for j in key:
                     if line[i]==j:
                         encrypt_text+=key[j]
+                        flag=True
                         break
+                if not flag:
+                    encrypt_text+=line[i]
+
 
         with open (text_path+'.encrypt','w') as file:
             file.write(encrypt_text)
@@ -68,10 +76,14 @@ class Replacement(Abstract):
             if checker:
                 line=file.read()
                 for i in range(len(line)):
+                    flag=False
                     for j in key:
                         if line[i]==key[j]:
                             decrypt_text+=j
+                            flag=True
                             break
+                    if not flag:
+                        decrypt_text+=line[i]
                 with open (text_path+'.txt','w') as file:
                     file.write(decrypt_text)
                     print('Расшифрованный текст сохранен в файле:', text_path, '.txt')

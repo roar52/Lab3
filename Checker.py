@@ -44,3 +44,27 @@ class Checker:
             return False
         else:
             return True
+
+    @staticmethod
+    def value_check():
+        while True:
+            try:
+                user_value=int(input('Укажите размер блока перестановки: '))
+            except ValueError:
+                print("Неверный тип данных! Попробуйте снова")
+            else:
+                if user_value>=1:
+                    return user_value
+                else:
+                    print('Неправильные данные! Попробуйте снова')
+
+    @staticmethod
+    def alph_check(alph):
+        alph_twice=[]
+        for i in range(len(alph)):
+            if not(alph[i] in alph_twice):
+                alph_twice.append(alph[i])
+            else:
+                return False
+
+        return True

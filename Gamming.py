@@ -10,9 +10,12 @@ class Gamming(Abstract):
         while True:
             alph_path = Checker.Checker.file_chek('alph', 'алфавитом', 'r')
             if Checker.Checker.get_info_from_json(alph_path):
-                break
-        file=open(alph_path)
-        alph = json.load(file)
+                with open(alph_path, 'r') as file:
+                    alph = json.load(file)
+                if not Checker.Checker.alph_check(alph):
+                    print('Дублирование в алфавите! Исправьте ошибку')
+                else:
+                    break
         self.__module=len(alph)
         index=int(input('Введите индекс первой буквы в алфавите: '))
 
@@ -20,12 +23,7 @@ class Gamming(Abstract):
         for i in range(len(alph)):
             dic[alph[i]] = i+index
         self.__alph=dic
-        while True:
-            gamma_len=int(input('Введите длину гаммы: '))
-            if gamma_len<1:
-                print('Неправильная длина гаммы!')
-            else:
-                break
+        gamma_len=Checker.Checker.value_check()
         key=[]
         for i in range(gamma_len):
             gamma_elem = int(input(f'Введите {i + 1} элемент гаммы: '))
