@@ -2,7 +2,7 @@ import random,Checker,json
 from AbstractCrypt import Abstract
 class Transposition(Abstract):
     def key_generator(self):
-        user_len=Checker.Checker.value_check()
+        user_len=Checker.Checker.value_check('Укажите размер блока перестановки: ')
         key=[]
         for i in range(1 ,user_len+1):
             key.append(i)
@@ -42,8 +42,8 @@ class Transposition(Abstract):
                     transposition[key[j]-1]=text[i+j]
                 for j in range(len(key)):
                     encrypt_text+=transposition[j]
-
-        with open(text_path+'.encrypt','w') as file:
+        text_path=text_path+'.encrypt'
+        with open(text_path,'w') as file:
             file.write(encrypt_text)
             print('Шифротекст сохранен в файле:',text_path,'.encrypt')
 
@@ -67,7 +67,8 @@ class Transposition(Abstract):
                         transposition[j] = text[i+key[j]-1]
                     for j in range(len(key)):
                         decrypt_text += transposition[j]
-                with open(text_path+'.txt','w') as file:
+                text_path=text_path+'.txt'
+                with open(text_path,'w') as file:
                     file.write(decrypt_text)
                     print('Расшифрованный текст сохранен в файле:', text_path, '.txt')
             else:

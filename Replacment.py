@@ -59,8 +59,8 @@ class Replacement(Abstract):
                 if not flag:
                     encrypt_text+=line[i]
 
-
-        with open (text_path+'.encrypt','w') as file:
+        text_path=text_path+'.encrypt'
+        with open (text_path,'w') as file:
             file.write(encrypt_text)
             print('Шифротекст сохранен в файле:',text_path,'.encrypt')
 
@@ -84,7 +84,8 @@ class Replacement(Abstract):
                             break
                     if not flag:
                         decrypt_text+=line[i]
-                with open (text_path+'.txt','w') as file:
+                text_path=text_path + '.txt'
+                with open (text_path,'w') as file:
                     file.write(decrypt_text)
                     print('Расшифрованный текст сохранен в файле:', text_path, '.txt')
             else:

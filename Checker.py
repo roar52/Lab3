@@ -9,9 +9,9 @@ class Checker:
             return False
 
     @staticmethod
-    def __file_exist(file_path):
+    def __file_exist(file_path,do):
         try:
-           file=open(file_path,'r')
+           file=open(file_path,do)
         except FileNotFoundError:
             print('Не существует такого файла! Попробуйте снова')
             return False
@@ -25,10 +25,11 @@ class Checker:
             alph_check = Checker.__path_check(file_path, expansion)
             if alph_check:
                 if do=='r':
-                    if Checker.__file_exist(file_path):
+                    if Checker.__file_exist(file_path,do):
                         break
-                else:
-                    break
+                elif do=='w':
+                    if Checker.__file_exist(file_path,do):
+                        break
             else:
                 print(f'Неправильное расширение файла с {type}! Попробуйте снова')
 
@@ -46,10 +47,10 @@ class Checker:
             return True
 
     @staticmethod
-    def value_check():
+    def value_check(text):
         while True:
             try:
-                user_value=int(input('Укажите размер блока перестановки: '))
+                user_value=int(input(text))
             except ValueError:
                 print("Неверный тип данных! Попробуйте снова")
             else:

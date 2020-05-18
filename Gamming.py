@@ -17,16 +17,16 @@ class Gamming(Abstract):
                 else:
                     break
         self.__module=len(alph)
-        index=int(input('Введите индекс первой буквы в алфавите: '))
+        index=Checker.Checker.value_check('Введите индекс первой буквы в алфавите:')
 
         dic = {}
         for i in range(len(alph)):
             dic[alph[i]] = i+index
         self.__alph=dic
-        gamma_len=Checker.Checker.value_check()
+        gamma_len=Checker.Checker.value_check('Введите длину гаммы: ')
         key=[]
         for i in range(gamma_len):
-            gamma_elem = int(input(f'Введите {i + 1} элемент гаммы: '))
+            gamma_elem=Checker.Checker.value_check(f'Введите {i + 1} элемент гаммы: ')
             key.append(gamma_elem)
         while (True):
             user_choice = input("Напечатать ключ? (Да/Нет)")
@@ -83,7 +83,8 @@ class Gamming(Abstract):
             if check==False:
                 encrypt_text+=line[i]
         file.close()
-        with open (text_path+'.encrypt','w') as file:
+        text_path=text_path+'.encrypt'
+        with open (text_path,'w') as file:
             file.write(encrypt_text)
             print('Шифротекст сохранен в файле:', text_path, '.encrypt')
 
@@ -121,6 +122,7 @@ class Gamming(Abstract):
                             break
                     if check == False:
                         decrypt_text += line[i]
+                text_path=text_path + '.txt'
                 with open(text_path + '.txt', 'w') as file:
                     file.write(decrypt_text)
                     print('Расшифрованный текст сохранен в файле:', text_path, '.txt')
